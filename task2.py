@@ -1,4 +1,3 @@
-# task2.py
 def count_subarrays_with_sum(array, target_sum):
     """Подсчитывает количество подмассивов с заданной суммой."""
     count = 0
@@ -22,14 +21,23 @@ def task2_menu():
     """Меню второго задания."""
     while True:
         print("\nЗадание 2: Подмассивы с заданной суммой")
-        array = list(map(int, input("Введите массив чисел через пробел: ").split()))
+        
+        # Ввод массива и целевой суммы
+        array_input = input("Введите массив чисел через пробел: ")
+        
+        try:
+            # Преобразование ввода в список целых чисел
+            array = list(map(int, array_input.split()))
+        except ValueError:
+            print("Ошибка ввода. Убедитесь, что введены только числа.")
+            continue
+            
         target_sum = int(input("Введите целевую сумму: "))
         
         # Создание потока для выполнения операции
         from threading import Thread
         operations_thread = Thread(target=task2_operations, args=(array, target_sum))
         operations_thread.start()
-        operations_thread.join()  # Ожидание завершения потока
 
         if input("Хотите продолжить? (y/n): ") != 'y':
             break

@@ -1,8 +1,10 @@
-# main.py
 import threading
 import task1
 import task2
 import task3
+
+# Список для отслеживания активных потоков
+active_threads = []
 
 def main_menu():
     """Главное меню приложения."""
@@ -16,14 +18,27 @@ def main_menu():
         choice = input("Выберите опцию: ")
 
         if choice == '1':
-            task1.task1_menu()
+            thread = threading.Thread(target=task1.task1_menu)
+            thread.start()
+            active_threads.append(thread)
+
         elif choice == '2':
-            task2.task2_menu()
+            thread = threading.Thread(target=task2.task2_menu)
+            thread.start()
+            active_threads.append(thread)
+
         elif choice == '3':
-            task3.task3_menu()
+            thread = threading.Thread(target=task3.task3_menu)
+            thread.start()
+            active_threads.append(thread)
+
         elif choice == '4':
             print("Выход из программы.")
+            # Завершение всех активных потоков перед выходом
+            for t in active_threads:
+                t.join()  # Дождаться завершения потоков
             break
+
         else:
             print("Неверный выбор.")
 

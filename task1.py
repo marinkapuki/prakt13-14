@@ -1,5 +1,5 @@
-# task1.py
 import random
+import threading
 
 def input_large_number_array(prompt):
     """Ввод массива чисел вручную."""
@@ -12,15 +12,15 @@ def generate_large_number_array(size):
 def sum_arrays(array1, array2):
     """Суммирует два массива."""
     max_length = max(len(array1), len(array2))
-    array1 = [0] * (max_length - len(array1)) + array1
-    array2 = [0] * (max_length - len(array2)) + array2
+    array1 = array1 + [0] * (max_length - len(array1))
+    array2 = array2 + [0] * (max_length - len(array2))
     return [a + b for a, b in zip(array1, array2)]
 
 def subtract_arrays(array1, array2):
     """Вычитает второй массив из первого."""
     max_length = max(len(array1), len(array2))
-    array1 = [0] * (max_length - len(array1)) + array1
-    array2 = [0] * (max_length - len(array2)) + array2
+    array1 = array1 + [0] * (max_length - len(array1))
+    array2 = array2 + [0] * (max_length - len(array2))
     return [a - b for a, b in zip(array1, array2)]
 
 def task1_operations(array1, array2, operation):
@@ -48,10 +48,8 @@ def task1_menu():
             array2 = input_large_number_array("Введите второй массив чисел: ")
             operation = input("Введите операцию (+ или -): ")
             # Создание потока для выполнения операции
-            from threading import Thread
-            operation_thread = Thread(target=task1_operations, args=(array1, array2, operation))
+            operation_thread = threading.Thread(target=task1_operations, args=(array1, array2, operation))
             operation_thread.start()
-            operation_thread.join()  # Ожидание завершения потока
 
         elif choice == '2':
             size = int(input("Введите размер массивов: "))
@@ -61,10 +59,8 @@ def task1_menu():
             print(f"Сгенерированный второй массив: {array2}")
             operation = input("Введите операцию (+ или -): ")
             # Создание потока для выполнения операции
-            from threading import Thread
-            operation_thread = Thread(target=task1_operations, args=(array1, array2, operation))
+            operation_thread = threading.Thread(target=task1_operations, args=(array1, array2, operation))
             operation_thread.start()
-            operation_thread.join()  # Ожидание завершения потока
 
         elif choice == '3':
             print("Сначала необходимо ввести или сгенерировать массивы.")
