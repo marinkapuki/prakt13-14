@@ -1,56 +1,50 @@
-import time
-from threading import Thread
-
-def count_subarrays_with_sum(array, target_sum):
-    """Подсчитывает количество подмассивов с заданной суммой."""
-    count = 0
-    n = len(array)
-    
-    for i in range(n):
-        current_sum = 0
-        for j in range(i, n):
-            current_sum += array[j]
-            if current_sum == target_sum:
-                count += 1
-                
-    return count
-
-def task2_operations(array, target_sum):
-    """Выполняет подсчет подмассивов с заданной суммой."""
-    result = count_subarrays_with_sum(array, target_sum)
-    print(f"Количество подмассивов с суммой {target_sum}: {result}")
-
-def task2_menu():
-    """Меню второго задания."""
-    while True:
-        print("\nЗадание 2: Подмассивы с заданной суммой")
-        
-        # Пауза перед вводом массива
-        print("Пауза перед вводом массива...")
-        time.sleep(7)  # Пауза на 7 секунд
-        
-        # Ввод массива и целевой суммы
-        array_input = input("Введите массив чисел через пробел: ")
-        
-        try:
-            # Преобразование ввода в список целых чисел
-            array = list(map(int, array_input.split()))
-        except ValueError:
-            print("Ошибка ввода. Убедитесь, что введены только числа.")
-            continue
-            
-        # Пауза перед вводом целевой суммы
-        print("Пауза перед вводом целевой суммы...")
-        time.sleep(7)  # Пауза на 7 секунд
-        
-        target_sum = int(input("Введите целевую сумму: "))
-        
-        # Создание потока для выполнения операции
-        operations_thread = Thread(target=task2_operations, args=(array, target_sum))
-        operations_thread.start()
-
-        if input("Хотите продолжить? (y/n): ") != 'y':
-            break
-
-if __name__ == "__main__":
-    task2_menu()
+import time 
+ 
+def count_subarrays_with_sum(array, target_sum): 
+    """Подсчитывает количество подмассивов с заданной суммой.""" 
+    count = 0 
+    n = len(array) 
+ 
+    for i in range(n): 
+        current_sum = 0 
+        for j in range(i, n): 
+            current_sum += array[j] 
+            if current_sum == target_sum: 
+                count += 1 
+                 
+    return count 
+ 
+def task2_menu(): 
+    """Меню второго задания.""" 
+     
+    while True: 
+        array_input_1 = input("Введите элементы первого массива через пробел: ") 
+         
+        if array_input_1.lower() == 'exit': 
+            break 
+             
+        array_input_2 = input("Введите элементы второго массива через пробел: ") 
+         
+        array_input_3 = input("Введите элементы третьего массива через пробел: ") 
+ 
+        try: 
+            arr1 = list(map(int, array_input_1.split())) 
+            arr2 = list(map(int, array_input_2.split())) 
+            arr3 = list(map(int, array_input_3.split())) 
+             
+            if len(arr1) != len(arr2) or len(arr2) != len(arr3): 
+                print("Все массивы должны быть одинакового размера.") 
+                continue 
+             
+            results = []  # Список для хранения результатов 
+             
+            for a, b, c in zip(arr1, arr2, arr3): 
+                if a + b == c: 
+                    results.append((a + b + c) ** min(a, b, c))   
+             
+            print("Результаты:", results)  # Выводим результаты проверки сумм 
+             
+        except ValueError: 
+            print("Ошибка ввода. Убедитесь, что введены только числа.") 
+ 
+        time.sleep(3)  # Пауза перед возвратом в меню 
