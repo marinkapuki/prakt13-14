@@ -1,47 +1,49 @@
-import threading 
-import time 
+import threading
+
 from task1 import task1 
 from task2 import task2 
 from task3 import task3 
  
-def print_menu(): 
-    """Выводит меню с доступными заданиями.""" 
-    print("\nГлавное меню:") 
-    print("1) Задание 1") 
-    print("2) Задание 2") 
-    print("3) Задание 3") 
-    print("4) Завершить работу программы") 
- 
-def main_menu(): 
-    """Главное меню приложения.""" 
-    while True: 
-        print_menu()  # Выводим меню 
-        choice = input("Выберите опцию: ") 
- 
-        if choice == '1': 
-            thread = threading.Thread(target=task1.task1_menu) 
-            thread.start() 
-            thread.join()  # Ожидаем завершения потока 
-            input("Нажмите Enter, чтобы продолжить...")  # Пауза перед возвратом в меню 
- 
-        elif choice == '2': 
-            thread = threading.Thread(target=task2.task2_menu) 
-            thread.start() 
-            thread.join()  # Ожидаем завершения потока 
-            input("Нажмите Enter, чтобы продолжить...")  # Пауза перед возвратом в меню 
- 
-        elif choice == '3': 
-            thread = threading.Thread(target=task3.task3_menu) 
-            thread.start() 
-            thread.join()  # Ожидаем завершения потока 
-            input("Нажмите Enter, чтобы продолжить...")  # Пауза перед возвратом в меню 
- 
-        elif choice == '4': 
-            print("Выход из программы.") 
-            break  # Выходим из цикла 
- 
-        else: 
-            print("Неверный выбор.") 
-         
-if __name__ == "__main__": 
-    main_menu()  # Запуск главного меню при выполнении скрипта 
+
+def user_menu(user_id):
+    while True:
+        print(f"\nПользователь {user_id}: Выберите пункт меню:")
+        print("1. Ввод данных")
+        print("2. Выполнение операции")
+        print("3. Вывод результата")
+        print("0. Выход")
+
+        choice = input(f"Пользователь {user_id}, ваш выбор: ")
+
+        if choice == '1':
+            data = input(f"Пользователь {user_id}, введите данные: ")
+            print(f"Пользователь {user_id} ввел данные: {data}")
+
+        elif choice == '2':
+            print(f"Пользователь {user_id} выполняет операцию...")
+
+        elif choice == '3':
+            print(f"Пользователь {user_id} выводит результат...")
+
+        elif choice == '0':
+            print(f"Пользователь {user_id} выходит из меню.")
+            break
+
+        else:
+            print("Неверный выбор. Пожалуйста, попробуйте снова.")
+
+def main():
+    # Создаем два потока для двух пользователей
+    user1_thread = threading.Thread(target=user_menu, args=(1,))
+    user2_thread = threading.Thread(target=user_menu, args=(2,))
+
+    # Запускаем потоки
+    user1_thread.start()
+    user2_thread.start()
+
+    # Ждем завершения потоков
+    user1_thread.join()
+    user2_thread.join()
+
+if __name__ == "__main__":
+    main()
